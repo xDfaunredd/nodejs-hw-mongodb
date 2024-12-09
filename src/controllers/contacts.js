@@ -32,7 +32,7 @@ export const getContactsByIdController = async (req, res) => {
   const contact = await getContactById(contactId);
 
   if (!contact) {
-    throw createHttpError(404, 'Student not found');
+    throw createHttpError(404, 'Contact not found');
   }
 
   res.status(200).json({
@@ -75,7 +75,7 @@ export const deleteContactController = async (req, res, next) => {
   const contact = await deleteContact(contactId);
 
   if (!contact) {
-    next(createHttpError(404, 'Student not found'));
+    next(createHttpError(404, 'Contact not found'));
     return;
   }
 
