@@ -12,13 +12,13 @@ import { parseSortParams } from '../utils/parseSortParams.js';
 export const getContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams(req.query);
-  const user = req;
+  const { user } = req;
   const contacts = await getAllContacts({
     page,
     perPage,
     sortBy,
     sortOrder,
-    user,
+    userId: user._id,
   });
 
   res.status(200).json({
