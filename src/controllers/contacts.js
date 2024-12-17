@@ -50,7 +50,25 @@ export const getContactsByIdController = async (req, res) => {
 
 export const createContactController = async (req, res) => {
   const { user } = req;
-  const contact = await createContact(req.body, user);
+  const photo = req.file;
+
+  let photoUrl;
+
+  if (photo) {
+    if (env('ENABLE_CLOUDINARY') === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = await saveFileToUploadDir(photo);
+    }
+  }
+
+  const contact = await createContact(
+    {
+      ...req.body,
+      [photo.fieldname]: photoUrl,
+    },
+    user,
+  );
   if (!contact) throw createHttpError(404, 'Error , cant create contact');
 
   res.status(201).json({
