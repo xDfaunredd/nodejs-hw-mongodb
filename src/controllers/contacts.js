@@ -65,7 +65,7 @@ export const createContactController = async (req, res) => {
   const contact = await createContact(
     {
       ...req.body,
-      [photo.fieldname]: photoUrl,
+      photo: photoUrl,
     },
     user,
   );
@@ -96,7 +96,7 @@ export const patchContactController = async (req, res, next) => {
 
   const result = await updateContact(contactId, user, {
     ...req.body,
-    [photo.fieldname]: photoUrl,
+    photo: photoUrl,
   });
 
   if (!result) {
